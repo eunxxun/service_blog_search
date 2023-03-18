@@ -39,6 +39,8 @@ out/
 ### Gradle ###
 **/build/
 !src/**/build/
+gradlew
+gradlew.bat
 
 ### Java ###
 # Compiled class file
