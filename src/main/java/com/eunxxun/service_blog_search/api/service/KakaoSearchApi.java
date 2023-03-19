@@ -26,7 +26,7 @@ public class KakaoSearchApi implements SearchApi<SearchRequest, KaKaoBlogRespons
     @Override
     public KaKaoBlogResponse search(SearchRequest request) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "KakaoAK  " + apiKey);
+        headers.set("Authorization", "KakaoAK " + apiKey);
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("sort", request.getSort())

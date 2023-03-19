@@ -17,16 +17,20 @@ public class BlogSearchController {
     private final BlogSearchService blogSearchService;
     private final KakaoSearchApi kakaoSearchApi;
 
-//    @GetMapping("/test/{id}")
-//    public SearchResult findById(@PathVariable Long id) throws Exception {
-//        return blogSearchService.findById(id);
-//    }
-
     @GetMapping("/search")
     public KaKaoBlogResponse searchKeyword(@RequestParam("keyword") String keyword,
-                                                 HttpServletRequest request) {
-        String ip = request.getRemoteAddr();
-        SearchRequest searchRequest = SearchRequest.builder().query(keyword).page(1).size(10).sort(SortType.ACCURACY.value()).build();
+                                           @RequestParam(value = "sort", required = false, defaultValue = "ACC") SortType sort,
+                                           @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                           @RequestParam(value = "size", required = false, defaultValue = "10") Integer size,
+                                           HttpServletRequest request) {
+
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+
+        SearchRequest searchRequest = SearchRequest.builder()
+                .query(keyword).page(page).size(size).sort(sort.value()).build();
 
         blogSearchService.save(ip, keyword);
         return kakaoSearchApi.search(searchRequest);
