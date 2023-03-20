@@ -1,7 +1,7 @@
 package com.eunxxun.service_blog_search.api.controller;
 
-import com.eunxxun.service_blog_search.api.model.code.SortType;
-import com.eunxxun.service_blog_search.api.model.dto.SearchRequest;
+import com.eunxxun.service_blog_search.api.model.code.KaKaoSortType;
+import com.eunxxun.service_blog_search.api.model.dto.kakao.KaKaoBlogRequest;
 import com.eunxxun.service_blog_search.api.model.dto.kakao.KaKaoBlogResponse;
 import com.eunxxun.service_blog_search.api.model.dto.kakao.PopularKeyword;
 import com.eunxxun.service_blog_search.api.service.BlogSearchService;
@@ -24,19 +24,21 @@ public class BlogSearchController {
 
     @GetMapping("/search")
     public KaKaoBlogResponse searchKeyword(@RequestParam("keyword") String keyword,
-                                           @RequestParam(value = "sort", required = false, defaultValue = "ACC") SortType sort,
+                                           @RequestParam(value = "sort", required = false, defaultValue = "ACC") KaKaoSortType sort,
                                            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                                            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size,
                                            HttpServletRequest request) {
-
         String ip = request.getHeader("X-Forwarded-For");
-        if (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
+        if (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) ip = request.getRemoteAddr();
 
-        SearchRequest searchRequest = SearchRequest.builder().query(keyword).page(page).size(size).sort(sort.value()).build();
+        KaKaoBlogRequest kaKaoBlogRequest = KaKaoBlogRequest.builder()
+                .query(keyword)
+                .page(page)
+                .size(size)
+                .sort(sort.value())
+                .build();
 
-        return blogSearchService.searchAndSave(ip, searchRequest);
+        return blogSearchService.searchAndSave(ip, kaKaoBlogRequest);
     }
 
     @GetMapping("/popular-keyword")
