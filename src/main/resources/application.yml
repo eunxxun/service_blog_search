@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+
+  devtools:
+    livereload:
+      enabled: true
+  sql:
+    init:
+      mode: always
+      platform: h2
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+
+logging:
+  level:
+    org.springframework.web: debug
+    org.hibernate:
+      SQL: debug
+      type.descriptor.sql.BasicBinder: trace
+
+openapi:
+  kakao:
+    url: https://dapi.kakao.com/v2/search/blog
+    apikey: 7e8e91e33bdba970c9e09c66df215181
+  naver:
+    url: https://openapi.naver.com/v1/search/blog
+    clientId: eaUUuAGvRwSb5pSPIOdb
+    clientSecret: XdqxldasNY
