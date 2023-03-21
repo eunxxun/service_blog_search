@@ -9,7 +9,6 @@ import java.util.List;
 public interface BlogSearchService {
     KaKaoBlogResponse searchAndSave(String ip, KaKaoBlogRequest kaKaoBlogRequest);
     KaKaoBlogResponse search(KaKaoBlogRequest kaKaoBlogRequest);
-    void saveSearchLog(String ip, String query);
     void increaseSearchCount(String keyword);
-    List<PopularKeyword> getTop10Keywords();
+    List<PopularKeyword> getTop10Keywords(Integer size);
 }

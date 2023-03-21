@@ -30,13 +30,13 @@ public class BlogSearchServiceImpl implements BlogSearchService {
     private final RedisTemplate<String, String> redisTemplate;
     private static final String REDIS_KEY = "search_count";
 
-//    @Async
     @Override
     public KaKaoBlogResponse searchAndSave(String ip, KaKaoBlogRequest kaKaoBlogRequest) {
+        //카카오 Api 호출
         KaKaoBlogResponse result = search(kaKaoBlogRequest);
-
+        //검색 로그 저장
         saveSearchLog(ip, kaKaoBlogRequest.getQuery());
-
+        //keyword Redis 횟수 증가
         increaseSearchCount(kaKaoBlogRequest.getQuery());
 
         return result;
@@ -47,8 +47,7 @@ public class BlogSearchServiceImpl implements BlogSearchService {
         return kakaoSearchApi.search(kaKaoBlogRequest);
     }
 
-    @Override
-    public void saveSearchLog(String ip, String query) {
+    private void saveSearchLog(String ip, String query) {
         blogSearchRepository.save(SearchResult.builder()
                 .userIp(ip)
                 .keyword(query)
@@ -62,9 +61,9 @@ public class BlogSearchServiceImpl implements BlogSearchService {
     }
 
     @Override
-    public List<PopularKeyword> getTop10Keywords() {
+    public List<PopularKeyword> getTop10Keywords(Integer size) {
         List<PopularKeyword> result = new ArrayList<>();
-        Set<ZSetOperations.TypedTuple<String>> keywords = redisTemplate.opsForZSet().reverseRangeWithScores(REDIS_KEY, 0, 9);
+        Set<ZSetOperations.TypedTuple<String>> keywords = redisTemplate.opsForZSet().reverseRangeWithScores(REDIS_KEY, 0, size - 1);
         if(keywords != null){
             for (ZSetOperations.TypedTuple<String> keyword : keywords) {
                 result.add(PopularKeyword.builder()

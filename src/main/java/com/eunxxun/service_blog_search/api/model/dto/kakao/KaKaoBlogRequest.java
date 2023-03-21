@@ -1,7 +1,5 @@
 package com.eunxxun.service_blog_search.api.model.dto.kakao;
 
-import com.eunxxun.service_blog_search.api.model.code.KaKaoSortType;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 @Getter
@@ -9,12 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KaKaoBlogRequest {
-    @NotEmpty
     private String query;
-    @Builder.Default
-    private String sort = KaKaoSortType.ACC.value();
-    @Builder.Default
-    private Integer page = 1;
-    @Builder.Default
-    private Integer size = 10;
+    private String sort;
+    private Integer page;
+    private Integer size;
 }

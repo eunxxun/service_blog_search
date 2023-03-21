@@ -20,6 +20,7 @@ public class RedisConfig {
         RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setEnableTransactionSupport(true); //redis 트랜잭션 On
         return redisTemplate;
     }
 }

@@ -21,7 +21,6 @@ class RedisServiceTest {
     @DisplayName("redis 검색 횟수 증가")
     void increaseSearchCount() {
         //given
-        redisTemplate.delete(REDIS_KEY);
         String[] keywords = {"test","test","test"};
 
         //when
@@ -32,4 +31,5 @@ class RedisServiceTest {
         //then
         assertThat(redisTemplate.opsForZSet().score(REDIS_KEY, "test")).isEqualTo(3);
     }
+
 }
