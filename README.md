@@ -6,7 +6,7 @@
 - java -jar build/libs/service_blog_search-0.0.1-SNAPSHOT.jar
 
 ### 프로젝트 환경
-- Java11
+- Java17
 - Spring Boot
 - Gradle
 - h2, JPA
