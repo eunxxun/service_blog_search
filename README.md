@@ -12,6 +12,9 @@
 - h2, JPA
 - Redis(인기검색어 목록 조회시 사용)
 
+### 빌드 결과물 링크(service_blog_search.jar)
+https://drive.google.com/file/d/1WkjfWrOp-n2cwM21YQRsjenspQbF9JUw/view?usp=sharing
+
 ## 문제 해결 전략
 
 ### 키워드로 블로그 검색
